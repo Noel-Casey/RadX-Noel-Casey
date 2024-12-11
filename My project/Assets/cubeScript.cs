@@ -1,29 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CubeControlScript : MonoBehaviour
 {
-    public GameObject victimCloneTemplate;
+    
     Rigidbody rb;
     float ThrustValue = 10.0f;
     float turningSpeed = 180;
     float jumpForce = 5;
     float explosionRadius = 5;
     float explosionStrength = 1000;
+    Physics gravityvalue;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        jumpForce = 5;
+        ThrustValue = 10;
+        
+        
+
+        
+
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            rb.AddForce(Vector3.forward);
+            rb.AddForce(Vector3.forward * ThrustValue, ForceMode.Force);
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -33,7 +45,7 @@ public class CubeControlScript : MonoBehaviour
 
         if (Input.GetKey(KeyCode.DownArrow))
         {
-            rb.AddForce(-transform.forward * ThrustValue * Time.deltaTime);
+            rb.AddForce(Vector3.back * ThrustValue, ForceMode.Force);
         }
 
         if (Input.GetKey(KeyCode.LeftArrow))
@@ -45,11 +57,16 @@ public class CubeControlScript : MonoBehaviour
         {
             transform.Rotate(Vector3.down * turningSpeed * Time.deltaTime);
         }
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            Instantiate(victimCloneTemplate, transform.position, transform.rotation);
 
+        if (Input.GetKey(KeyCode.LeftControl))
+        {
+            // Physics.gravity = new Vector3(0, -1.0F, 0);
+            Time.timeScale = 0.2f;
         }
+        else
+            Time.timeScale = 1f;
+
+
     }
     private void OnCollisionEnter(Collision collision)
     {

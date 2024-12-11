@@ -22,7 +22,7 @@ public class noelScript : MonoBehaviour
     void Update()
     {
         noelsAnimator.SetBool("IsWalking", false);
-        noelsAnimator.SetBool("isWalking", false);
+        noelsAnimator.SetBool("IsWalkingBack", false);
         speed = 0;
 
         if (Input.GetKey(KeyCode.W))
@@ -41,9 +41,19 @@ public class noelScript : MonoBehaviour
         {
             speed *= RunningMultiplier;
             noelsAnimator.SetBool("IsRunning", true);
+            noelsAnimator.SetBool("IsRunningBack", true);
         }
         else
             noelsAnimator.SetBool("IsRunning", false);
+            noelsAnimator.SetBool("IsRunningBack", false);
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            speed *= RunningMultiplier;
+            noelsAnimator.SetBool("IsRunningBack", true);
+        }
+        else
+            noelsAnimator.SetBool("IsRunningBack", false);
 
         if (Input.GetKey(KeyCode.D))
         {
